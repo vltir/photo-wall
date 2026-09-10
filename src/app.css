@@ -1,0 +1,33 @@
+:root {
+  color-scheme: dark;
+  --bg-main: #0a0a0a;
+  --bg-surface: #171717;
+  --border-dim: #262626;
+  --text-primary: #ededed;
+  --text-muted: #a1a1a1;
+  --accent-primary: #3b82f6;
+  --accent-danger: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font: inherit;
+}
+
+input, select {
+  font: inherit;
+}
