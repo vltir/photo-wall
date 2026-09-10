@@ -66,3 +66,5 @@ export interface EncryptedPayload {
   readonly ciphertext: Uint8Array;
   readonly iv: Uint8Array;
 }
+
+export type SymmetricKey = unknown;

@@ -5,7 +5,7 @@ import type {
   MediaDimensions,
   MediaPayload,
   SignalingPayload,
-  StoredMediaMetadata,
+  StoredMediaMetadata, SymmetricKey,
 } from '../domain/models';
 
 export interface IStorageAdapter {
@@ -46,13 +46,13 @@ export interface IBlobStoreTransport {
 
 export interface ICryptoProvider {
   generateAsymmetricKeyPair(): KeyPair;
-  generateSymmetricKey(): Promise<CryptoKey>;
-  exportKeyHex(key: CryptoKey): Promise<string>;
-  importKeyHex(hex: string): Promise<CryptoKey>;
-  encryptBytes(data: Uint8Array, key: CryptoKey): Promise<EncryptedPayload>;
+  generateSymmetricKey(): Promise<SymmetricKey>;
+  exportKeyHex(key: SymmetricKey): Promise<string>;
+  importKeyHex(hex: string): Promise<SymmetricKey>;
+  encryptBytes(data: Uint8Array, key: SymmetricKey): Promise<EncryptedPayload>;
   decryptBytes(
     ciphertext: Uint8Array,
-    key: CryptoKey,
+    key: SymmetricKey,
     iv: Uint8Array
   ): Promise<Uint8Array>;
   computeSha256(data: Uint8Array): Promise<string>;

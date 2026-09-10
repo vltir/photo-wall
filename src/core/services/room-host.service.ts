@@ -3,7 +3,6 @@ import type {
   MediaPayload,
   RoomInitResult,
   SignalingPayload,
-  StoredMediaMetadata,
 } from '../domain/models';
 import type { IRoomHostService } from '../ports/input';
 import type {
@@ -81,25 +80,15 @@ export class RoomHostService implements IRoomHostService {
     // Replay buffer: 300 seconds prior to latest sync to capture any network lag
     const sinceTimestamp = Math.max(0, latestTimestamp - 300);
 
-    let batchCount = 0;
-    let badgeDebounceTimer: ReturnType<typeof setTimeout> | null = null;
-
     this.unsubscribeSignaling = await this.deps.signaling.subscribe(
       this.activePublicKeyHex,
       sinceTimestamp,
       async (signal: SignalingPayload) => {
         try {
           await this.ingestSignal(signal);
-          batchCount += 1;
-
-          if (badgeDebounceTimer) clearTimeout(badgeDebounceTimer);
-          badgeDebounceTimer = setTimeout(() => {
-            onNewMediaBadge(batchCount);
-            batchCount = 0;
-          }, 400);
-        } catch (err) {
+          onNewMediaBadge(1);
+        } catch {
           // Discard invalid / tampered payloads safely without halting the sync loop
-          console.error('Failed to ingest incoming signal:', err);
         }
       }
     );
